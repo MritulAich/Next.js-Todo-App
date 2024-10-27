@@ -10,7 +10,7 @@ function AddList() {
 
     const handleCreateTask = async () => {
         if (!newTask || !taskDate) {
-            setMessage("Please enter a task and a date.");
+            setMessage("Enter a task and a date.");
             return;
         }
 
@@ -55,9 +55,7 @@ function AddList() {
                         className="border p-2 w-full rounded mb-4"
                         required
                     />
-                    <button onClick={handleCreateTask} className="bg-blue-500 text-white p-2 rounded w-full">
-                        Add Task
-                    </button>
+                    <button onClick={handleCreateTask} className="bg-blue-500 text-white p-2 rounded w-full">Add Task</button>
                 </div>
 
                 {message && (

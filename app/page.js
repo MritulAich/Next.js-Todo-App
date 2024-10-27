@@ -62,7 +62,7 @@ export default function Home() {
                 <th>Change</th>
               </tr>
             </thead>
-            <tbody key={tasks.id}>
+            <tbody>
               {tasks.length > 0 ? (
                 tasks.map((task) => (
                   <tr className="border border-black" key={task.id}>
