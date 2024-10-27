@@ -1,24 +1,71 @@
 "use client";
+
+import { useState } from "react";
 import ProtectedRoute from "@/components/protectedRoute";
 
 function AddList() {
+    const [newTask, setNewTask] = useState('');
+    const [taskDate, setTaskDate] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleCreateTask = async () => {
+        if (!newTask || !taskDate) {
+            setMessage("Please enter a task and a date.");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/task', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ task: newTask, date: taskDate }),
+            });
+
+            if (response.ok) {
+                setMessage("Task added successfully!");
+                setNewTask('');
+                setTaskDate('');
+                console.log(newTask, taskDate);
+            } else {
+                setMessage("Failed to add task.");
+            }
+        } catch (error) {
+            setMessage("An error occurred. Please try again.");
+        }
+    };
+
     return (
         <ProtectedRoute>
-        
-            <form className="max-w-sm mx-auto mt-8">
-                <div className="mb-5">
-                    <label className="block mb-2">Date Reminder :</label>
-                    <input type="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required />
-                </div>
-                <div className="mb-5">
-                    <label className="block mb-2">Task :</label>
-                    <input type="text" id="task" placeholder="Task name" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " required />
+            <div className="max-w-md mx-auto mt-8">
+                <div className="mb-4">
+                    <input
+                        type="date"
+                        value={taskDate}
+                        onChange={(e) => setTaskDate(e.target.value)}
+                        className="border p-2 w-full rounded mb-4"
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={newTask}
+                        onChange={(e) => setNewTask(e.target.value)}
+                        placeholder="Add a new task"
+                        className="border p-2 w-full rounded mb-4"
+                        required
+                    />
+                    <button onClick={handleCreateTask} className="bg-blue-500 text-white p-2 rounded w-full">
+                        Add Task
+                    </button>
                 </div>
 
-                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600">Add List</button>
-            </form>
+                {message && (
+                    <p className="mt-4 text-center text-sm text-red-500">{message}</p>
+                )}
+            </div>
         </ProtectedRoute>
-    )
+    );
 }
 
-export default AddList
+export default AddList;

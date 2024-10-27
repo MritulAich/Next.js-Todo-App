@@ -25,12 +25,10 @@ export default function RootLayout({ children }) {
 
         <h1 className="text-4xl text-center mt-8 mb-4 text-green-800">Welcome to my Todo App</h1>
           <hr />
-          
           <nav>
             <ul className="flex justify-center gap-20 text-2xl underline my-4">
               <li><Link href='/'>Home</Link></li>
               <li><Link href='/addList'>Add List</Link></li>
-              
             </ul>
           </nav>
         {children}
