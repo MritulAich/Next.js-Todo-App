@@ -8,5 +8,4 @@ export default NextAuth({
             clientSecret: '48a67ee2b7c48600461a98ad96cbbc9a62926ec1'
         }),
     ],
-    // ...other NextAuth.js configuration options
 });
